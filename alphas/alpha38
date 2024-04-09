@@ -1,0 +1,30 @@
+#include "functions_extended.cpp"
+
+std::vector<double> Alpha38(const std::vector<double> &close, const std::vector<double> &open)
+{
+    std::vector<double> tsRank_close10 = ts_rank(close, 10);
+    
+    std::vector<pair<double, double>> rank_tsRank_close10 = rank(tsRank_close10);
+
+
+
+    std::vector<double> closeDivOpen(close.size());
+    for(int i=0; i<close.size(); i++)
+    {
+        closeDivOpen[i] = close[i]/open[i];
+    }
+
+    std::vector<pair<double, double>> rank_closeDivOpen = rank(closeDivOpen);
+
+
+
+
+    std::vector<double> retAlpha(close.size());
+    for(int i=0; i<close.size(); i++)
+    {
+        retAlpha[i] = -1*(rank_tsRank_close10[i].second)*(rank_closeDivOpen[i].second);
+    }
+
+    return retAlpha;
+
+}
